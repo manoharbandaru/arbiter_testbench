@@ -44,15 +44,8 @@ class test_send_req extends test_base;
     seq_send_req.randomize();
     seq_send_req.start(env.agent.arb_sequencer);					//Have to pass in the sequencer for the sequence to run on.
     #5ns;
-    //`uvm_do_on(seq_send_req, env.agent.arb_sequencer);	
     phase.drop_objection(this);
   endtask : main_phase    
-  /*
-  class my_PHASE_phase extends uvm_task_phase;
-class my_PHASE_phase extends uvm_topdown_phase;
-class my_PHASE_phase extends uvm_bottomup_phase;
-https://verificationacademy.com/verification-methodology-reference/uvm/docs_1.2/html/files/overviews/test-phasing-txt.html
-*/
 endclass : test_send_req
 
 class test_default_sequence extends test_base;
@@ -63,7 +56,6 @@ class test_default_sequence extends test_base;
     
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    //uvm_config_wrapper::set(this, "env.virtual_sequencer.run_phase", "default_sequence", hello_world_virtual_sequence::type_id::get());
     uvm_config_db#(uvm_object_wrapper)::set(null, "/.*sequencer.run_phase/", "default_sequence", arbiter_send_req#(MAX_REQ)::get_type());
   endfunction : build_phase
 endclass : test_default_sequence
